@@ -5,37 +5,40 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { HttpClient } from '@angular/common/http';
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  selector: 'app-register',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.css'],
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
 })
-export class LoginComponent {
+export class SignUpComponent {
   fb = inject(FormBuilder);
   http = inject(HttpClient);
   router = inject(Router);
   authService = inject(AuthService);
   form = this.fb.nonNullable.group({
+    username: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required],
+    password: ['', [Validators.required, Validators.minLength(6)]],
   });
   errorMessage: string | null = null;
   authFailed: boolean = false;
 
   onSubmit(): void {
     const rowForm = this.form.getRawValue();
-    this.authService.login(rowForm.email, rowForm.password).subscribe({
-      next: () => this.router.navigate(['/dashboard']),
-      error: (err) => {
-        this.errorMessage = err.message;
-        this.authFailed = true;
-      },
-    });
+    this.authService
+      .signup(rowForm.username, rowForm.email, rowForm.password)
+      .subscribe({
+        next: () => this.router.navigate(['/dashboard']),
+        error: (err) => {
+          this.errorMessage = err.message;
+          this.authFailed = true;
+        },
+      });
   }
 
-  navigateToSignUp(): void {
-    this.router.navigate(['/signup']);
+  navigateToLogin(): void {
+    this.router.navigate(['/login']);
   }
 
   onHandleError(): void {

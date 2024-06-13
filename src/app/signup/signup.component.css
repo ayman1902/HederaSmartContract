@@ -1,11 +1,4 @@
-.container {
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.login-container {
+.signup-container {
   width: 300px;
   margin: 0 auto;
   padding: 1rem;
@@ -21,6 +14,11 @@ h2 {
 
 .form-group {
   margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
 }
 
 input {
@@ -48,14 +46,4 @@ button:hover {
   color: red;
   margin-top: 1rem;
   text-align: center;
-}
-
-.alert.alert-danger {
-  color: red;
-  text-align: center;
-}
-
-.signup-link {
-  text-align: center;
-  margin-top: 20px;
 }
